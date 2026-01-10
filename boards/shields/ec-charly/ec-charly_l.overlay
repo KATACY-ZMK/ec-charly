@@ -1,7 +1,7 @@
 #include "ec-charly.dtsi"
 &kscan0 {
     compatible = "zmk,kscan-gpio-charlieplex";
-    interrupt-gpios = <&xiao 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+    interrupt-gpios = <&xiao_d 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
     gpios = 
         <&xiao_d 0 GPIO_ACTIVE_HIGH>,  // IO0
