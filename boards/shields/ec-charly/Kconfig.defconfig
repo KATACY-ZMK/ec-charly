@@ -1,14 +1,14 @@
-if SHIELD_EC-TEST_R
+if SHIELD_ECCHARLY_R
 
 config ZMK_KEYBOARD_NAME
-    default "ec-test Keyboard"
+    default "ec-charly"
 
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
 endif
 
-if SHIELD_EC-TEST_LEFT || SHIELD_EC-TEST_RIGHT
+if SHIELD_ECCHARLY_L || SHIELD_ECCHARLY_R
 
 config ZMK_SPLIT
     default y
