@@ -1,0 +1,5 @@
+config SHIELD_ECTEST_R
+    def_bool $(shields_list_contains,ec-test_r)
+
+config SHIELD_ECTEST_L
+    def_bool $(shields_list_contains,ec-test_l)

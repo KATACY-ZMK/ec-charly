@@ -1,0 +1,20 @@
+#include "ec-test.dtsi"
+
+&default_transform {
+    col-offset = <2>;
+};
+
+&kscan0 {
+    col-gpios
+        = <&xiao_d 8 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 7 GPIO_ACTIVE_HIGH>
+        ;
+};
+
+&right1_encoder {
+   status = "okay";
+};
+
+&right2_encoder {
+   status = "okay";
+};
