@@ -19,7 +19,7 @@
         <&xiao_d 2 GPIO_ACTIVE_HIGH>,  // IO2
         <&xiao_d 3 GPIO_ACTIVE_HIGH>,  // IO3
         <&xiao_d 4 GPIO_ACTIVE_HIGH>,  // IO4
-        <&xiao_d 5 GPIO_ACTIVE_HIGH>,  // IO5
+        <&xiao_d 5 GPIO_ACTIVE_HIGH>;  // IO5
 };
 
 &right1_encoder {
