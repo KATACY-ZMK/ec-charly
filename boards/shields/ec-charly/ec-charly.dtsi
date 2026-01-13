@@ -1,6 +1,10 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <dt-bindings/input/input-event-codes.h>
 
+    &uicr {
+        nfct-pins-as-gpios;
+};
+
 / {
     chosen {
         zmk,kscan = &kscan0;
@@ -71,8 +75,4 @@
         sensors = <&left1_encoder &left2_encoder &right1_encoder &right2_encoder>;
         triggers-per-rotation = <6>;
     };
-};
-
-    &uicr {
-        nfct-pins-as-gpios;
 };
