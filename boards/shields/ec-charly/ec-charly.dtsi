@@ -39,18 +39,19 @@
     };
 
 
+/* エンコーダー本体の物理設定 (steps) */
     left1_encoder: encoder_left1 {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <24>;
+        steps = <24>; /* User指定 */
         status = "disabled";
     };
     left2_encoder: encoder_left2 {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 19 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio1 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <24>;
+        steps = <12>; /* User指定 */
         status = "disabled";
     };
 
@@ -58,23 +59,36 @@
         compatible = "alps,ec11";
         a-gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <24>;
+        steps = <12>; /* User指定 */
         status = "disabled";
     };
     right2_encoder: encoder_right2 {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 19 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio1 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <24>;
+        steps = <24>; /* User指定 */
         status = "disabled";
     };
 
-    sensors: sensors {
+    /* ここがポイントです：
+       triggers-per-rotationの値ごとにsensorsノードを分割して定義します。
+    */
+
+    /* Group 1: triggers-per-rotation = 6 (left1, right2) */
+    sensors_low_res {
         compatible = "zmk,keymap-sensors";
-        sensors = <&left1_encoder &left2_encoder &right1_encoder &right2_encoder>;
+        sensors = <&left1_encoder &right2_encoder>;
         triggers-per-rotation = <6>;
     };
-};
+
+    /* Group 2: triggers-per-rotation = 24 (left2, right1) */
+    sensors_high_res {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&left2_encoder &right1_encoder>;
+        triggers-per-rotation = <24>;
+    };
+
+    
 
 &pinctrl {
     spi0_default: spi0_default {
