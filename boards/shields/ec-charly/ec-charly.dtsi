@@ -43,7 +43,7 @@
         compatible = "alps,ec11";
         a-gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <30>;
+        steps = <40>;
         status = "disabled";
     };
     left2_encoder: encoder_left2 {
@@ -65,7 +65,7 @@
         compatible = "alps,ec11";
         a-gpios = <&gpio0 19 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio1 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <30>;
+        steps = <40>;
         status = "disabled";
     };
 
