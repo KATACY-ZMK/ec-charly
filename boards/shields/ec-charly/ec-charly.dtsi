@@ -1,14 +1,15 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <dt-bindings/input/input-event-codes.h>
 
-&uicr {
-    nfct-pins-as-gpios;
+    &uicr {
+        nfct-pins-as-gpios;
 };
 
 / {
     chosen {
         zmk,kscan = &kscan0;
     };
+
 
     default_transform: keymap_transform0 {
         compatible = "zmk,matrix-transform";
@@ -20,8 +21,8 @@
         RC(0,3) RC(1,3)         RC(3,2) RC(4,2) RC(5,2) RC(6,2) RC(7,2)     RC(8,3) RC(9,3) RC(10,3) RC(11,2) RC(12,2) RC(13,2) RC(14,2) RC(15,2) RC(15,4)
         RC(0,4) RC(1,4)         RC(3,4) RC(4,3) RC(5,3) RC(6,3) RC(7,3)     RC(8,4) RC(9,4) RC(10,4) RC(11,4) RC(12,3) RC(13,3) RC(14,3)          RC(15,5)
         RC(0,5) RC(1,5)         RC(3,5) RC(4,5) RC(5,4) RC(6,4) RC(7,4)     RC(8,5) RC(9,5) RC(10,5) RC(11,5) RC(12,5) RC(13,4)          RC(14,4)
-        RC(0,6) RC(1,6) RC(2,6) RC(3,6) RC(4,6)         RC(5,6) RC(6,5)     RC(8,6) RC(9,6)                                          RC(10,6) RC(11,6) RC(12,6)
-        >;
+        RC(0,6) RC(1,6) RC(2,6) RC(3,6) RC(4,6)         RC(5,6) RC(6,5)     RC(8,6) RC(9,6)                                     RC(10,6) RC(11,6) RC(12,6)
+>;
     };
 
     kscan0: kscan0 {
@@ -29,27 +30,27 @@
         wakeup-source;
     };
 
+
     physical_layout0: physical_layout0 {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
-        transform = <&default_transform>;
-        kscan = <&kscan0>;
+        transform = <&default_transform>; // 既存の transform を参照 
+        kscan = <&kscan0>;                // 既存の kscan を参照 [cite: 11]
     };
 
-    /* --- エンコーダー定義 --- */
-    
+
     left1_encoder: encoder_left1 {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <24>;
+        steps = <80>;
         status = "disabled";
     };
     left2_encoder: encoder_left2 {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 19 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio1 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <12>;
+        steps = <80>;
         status = "disabled";
     };
 
@@ -57,45 +58,23 @@
         compatible = "alps,ec11";
         a-gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <12>;
+        steps = <80>;
         status = "disabled";
     };
     right2_encoder: encoder_right2 {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 19 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio1 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <24>;
+        steps = <80>;
         status = "disabled";
     };
 
-    /* --- センサーグループ (感度設定) --- */
-
-    /* Group 1: triggers-per-rotation = 6 (Heavy: left1, right2) */
-    sensors_low_res {
+    sensors: sensors {
         compatible = "zmk,keymap-sensors";
-        sensors = <&left1_encoder &right2_encoder>;
-        triggers-per-rotation = <6>;
+        sensors = <&left1_encoder &left2_encoder &right1_encoder &right2_encoder>;
+        triggers-per-rotation = <20>;
     };
-
-    /* Group 2: triggers-per-rotation = 24 (Fast: left2, right1) */
-    sensors_high_res {
-        compatible = "zmk,keymap-sensors";
-        sensors = <&left2_encoder &right1_encoder>;
-        triggers-per-rotation = <24>;
-    };
-
-    /* --- トラックボール リスナー --- */
-    trackball_listener: trackball_listener {
-        compatible = "zmk,input-listener";
-        status = "okay"; /* ここを有効化しておきます */
-        device = <&trackball>;
-    };
-
-}; /* End of Root Node */
-
-
-/* --- Pin Control & SPI Config --- */
-/* これらはルートノードの外側に書きます */
+};
 
 &pinctrl {
     spi0_default: spi0_default {
@@ -136,5 +115,16 @@
         zephyr,axis-y = <INPUT_REL_Y>;
         invert-x;
         invert-y;
+
+        /* force-awake; */ // 必要なければコメントアウトのままでOK
+    };
+};
+
+/* リスナーは &spi0 の外（ルートレベル）で定義します */
+/ {
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        status = "disabled";  /* ここを okay にしないとトラックボールが反応しません */
+        device = <&trackball>;
     };
 };
