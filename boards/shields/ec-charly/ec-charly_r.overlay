@@ -14,10 +14,10 @@
     interrupt-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
     gpios = 
-        <&xiao_d 10 GPIO_ACTIVE_HIGH>,  // IO0
+        <&gpio1 1 GPIO_ACTIVE_HIGH>,  // IO0
         <&xiao_d 9 GPIO_ACTIVE_HIGH>,  // IO1
         <&xiao_d 8 GPIO_ACTIVE_HIGH>,  // IO2
-        <&xiao_d 7 GPIO_ACTIVE_HIGH>,  // IO3
+        <&gpio0 15 GPIO_ACTIVE_HIGH>,  // IO3
         <&xiao_d 6 GPIO_ACTIVE_HIGH>,  // IO4
         <&xiao_d 3 GPIO_ACTIVE_HIGH>,  // IO5
         <&xiao_d 2 GPIO_ACTIVE_HIGH>,  // IO6

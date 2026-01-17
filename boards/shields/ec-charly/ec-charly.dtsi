@@ -101,14 +101,14 @@
     pinctrl-0 = <&spi0_default>;
     pinctrl-1 = <&spi0_sleep>;
     pinctrl-names = "default", "sleep";
-    cs-gpios = <&gpio1 1 GPIO_ACTIVE_LOW>;
+    cs-gpios = <&xiao_d 7 GPIO_ACTIVE_LOW>;
     
     trackball: trackball@0 {
         status = "okay";
         compatible = "pixart,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
-        motion-gpios = <&gpio0 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        motion-gpios = <&xiao_d 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         res-cpi = <600>;
         
         zephyr,axis-x = <INPUT_REL_X>;
