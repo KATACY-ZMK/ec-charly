@@ -39,7 +39,7 @@
     };
 
 
-     left1_encoder: encoder_left1 {
+    left1_encoder: encoder_left1 {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
