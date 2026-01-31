@@ -16,7 +16,7 @@
 };
 
 / {
-input_processors {
+    input_processors {
         zip_wheel_scaler: zip_wheel_scaler {
             compatible = "zmk,input-processor-scaler";
             #input-processor-cells = <2>;
@@ -26,12 +26,12 @@ input_processors {
         };
     };
 
-
     behaviors {
         mouse_scrl: mouse_wheel_scrl {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
             bindings = <&msc>, <&msc>;
+
             tap-ms = <10>;
         };
 
@@ -57,9 +57,9 @@ input_processors {
 
             sensor-bindings =
                 <&inc_dec_kp C_VOLUME_DOWN C_VOLUME_UP>,
-                <&inc_dec_kp A B>,
+                <&mouse_scrl SCRL_UP SCRL_DOWN>,
                 <&inc_dec_kp LC(PG_UP) LC(PAGE_DOWN)>,
-                <&inc_dec_kp A B>;
+                <&mouse_scrl SCRL_RIGHT SCRL_LEFT>;
         };
 
         layer_1 {
