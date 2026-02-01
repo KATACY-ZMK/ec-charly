@@ -21,3 +21,31 @@
 &left2_encoder {
    status = "okay";
 };
+
+/* ec-charly_l.overlay の末尾に追加 */
+
+/* -------------------------------------------------------------
+   キーマップが参照できるようにするためのダミー定義
+   status = "disabled" なので、実際の動作やピンには影響しません
+   ------------------------------------------------------------- */
+
+/* 1. SPI0を無効化しつつ、中にダミーのトラックボール定義を置く */
+&spi0 {
+    status = "disabled"; /* 重要：これを忘れるとD8,D9,D10ピンを奪ってキースキャンを妨害します */
+
+    trackball: trackball@0 {
+        status = "disabled";
+        compatible = "pixart,pmw3610";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+    };
+};
+
+/* 2. トラックボールリスナーのダミー定義 */
+/ {
+    trackball_listener: trackball_listener {
+        status = "disabled";
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+    };
+};
