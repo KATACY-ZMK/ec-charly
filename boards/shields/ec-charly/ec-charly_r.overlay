@@ -71,7 +71,17 @@
 };
 
 / {
+  trackball_listener: trackball_listener {  // "trackball_listener:" を追加
+    status = "okay";
+    compatible = "zmk,input-listener";
+    device = <&trackball>;
+  };
+};
+
+
+/ {
   trackball_listener {
+    status = "okay";
     compatible = "zmk,input-listener";
     device = <&trackball>;
   };
