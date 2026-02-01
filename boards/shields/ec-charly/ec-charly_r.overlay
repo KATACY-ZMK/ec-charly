@@ -65,6 +65,7 @@
     };
 };
 
+// --- ファイル末尾の / { ... } ブロックを以下に差し替え ---
 / {
     /* 縦移動専用の倍率設定 */
     zip_scaler_y: zip_scaler_y {
@@ -74,10 +75,10 @@
         codes = <INPUT_REL_Y>; 
     };
 
-    /* トラックボールリスナーの本体定義 */
+    /* リスナーのラベル定義のみ（中身は keymap で上書き） */
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
-        status = "okay";  
         device = <&trackball>;
+        status = "okay";
     };
 };

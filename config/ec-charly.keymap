@@ -4,23 +4,29 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
+#include <dt-bindings/zmk/input_transform.h> // ★必須：方向反転に必要
 
 #define BASE 0
 #define SCROLL 1
 
-/* オーバーレイで定義したリスナーに動作を割り当てる */
-&trackball_listener {
-    status = "okay";
-    /* 通常時はY軸1.5倍速 */
-    input-processors = <&zip_scaler_y 3 2>;
+/ {
+    /* リスナー本体を keymap 側で定義することで label 未定義エラーを防ぐ */
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&trackball>;
 
-    scroller {
-        layers = <SCROLL>;
-        input-processors = <
-            &zip_xy_transform INPUT_TRANSFORM_Y_INVERT
-            &zip_xy_scaler 1 20
-            &zip_xy_to_scroll_mapper
-        >;
+        /* 通常時は Y軸1.5倍速（zip_scaler_y は r.overlay で定義） */
+        input-processors = <&zip_scaler_y 3 2>;
+
+        scroller {
+            layers = <SCROLL>;
+            input-processors = <
+                &zip_xy_transform INPUT_TRANSFORM_Y_INVERT
+                &zip_xy_scaler 1 20
+                &zip_xy_to_scroll_mapper
+            >;
+        };
     };
 };
 
