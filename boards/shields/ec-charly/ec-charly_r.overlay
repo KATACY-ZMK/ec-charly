@@ -90,3 +90,9 @@
         input-processors = <&zip_scaler_y 3 2>;
     };
 };
+
+&trackball_listener {
+    status = "okay";
+    compatible = "zmk,input-listener";
+    device = <&trackball>;
+};
