@@ -59,19 +59,14 @@
         motion-gpios = <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         res-cpi = <800>;
         
-        /* 現在の正しい向きの設定 */
         zephyr,axis-x = <INPUT_REL_Y>;
         zephyr,axis-y = <INPUT_REL_X>;
-        
         invert-y;
-        
-        /* force-awake; */
     };
 };
 
-/* ▼ ルートノードに変更を加えます ▼ */
 / {
-    /* 1. 縦移動(REL_Y)専用の速度設定を定義 */
+    /* 縦移動専用の倍率設定 */
     zip_scaler_y: zip_scaler_y {
         compatible = "zmk,input-processor-scaler";
         #input-processor-cells = <2>;
@@ -79,20 +74,10 @@
         codes = <INPUT_REL_Y>; 
     };
 
-    /* 2. リスナーでその設定を適用 */
+    /* トラックボールリスナーの本体定義 */
     trackball_listener: trackball_listener {
         compatible = "zmk,input-listener";
         status = "okay";  
         device = <&trackball>;
-        
-        /* <分子 分母> で倍率指定。 <3 2> = 1.5倍速 */
-        /* もっと速くしたいなら <2 1> (2倍速) に変更してください */
-        input-processors = <&zip_scaler_y 3 2>;
     };
-};
-
-&trackball_listener {
-    status = "okay";
-    compatible = "zmk,input-listener";
-    device = <&trackball>;
 };
