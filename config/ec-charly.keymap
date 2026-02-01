@@ -7,12 +7,28 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
+#include <dt-bindings/zmk/input_transform.h> // トランスフォーム用に追加
 
+// スクロール速度などの感度調整用（必要に応じて変更してください）
 &msc {
     delay-ms = <0>;
     trigger-period-ms = <10>;
     time-to-max-speed-ms = <0>;
     acceleration-exponent = <0>;
+};
+
+/* * トラックボールリスナーの設定
+ * レイヤー1がアクティブな時、ボールの動きをスクロールに変換します
+ */
+&trackball_listener {
+    scroller {
+        layers = <1>; // レイヤー1でスクロールを有効化
+        input-processors = <
+            &zip_xy_transform INPUT_TRANSFORM_Y_INVERT // 上下反転（自然なスクロール感のため）
+            &zip_xy_scaler 1 20                        // スクロール感度の倍率
+            &zip_xy_to_scroll_mapper                   // 動きをスクロール信号に変換
+        >;
+    };
 };
 
 / {
@@ -31,7 +47,6 @@
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
             bindings = <&msc>, <&msc>;
-
             tap-ms = <10>;
         };
 
@@ -46,6 +61,7 @@
         compatible = "zmk,keymap";
 
         default_layer {
+            display-name = "Base";
             bindings = <
 &kp C_MUTE     &kp ESCAPE      &kp F1        &kp F2        &kp F3    &kp F4        &kp F5  &kp F6           &kp F7     &kp F8     &kp F9      &kp F10          &kp F11           &kp F12            &kp HOME       &kp PRINTSCREEN  &mo 1
 &kp LC(LS(T))  &kp GRAVE       &lt 1 N1      &lt 2 N2      &lt 3 N3  &kp NUMBER_4  &kp N5  &kp N6           &kp N7     &kp N8     &kp N9      &kp N0           &kp MINUS         &kp EQUAL          &kp BACKSPACE  &kp DEL
@@ -63,6 +79,7 @@
         };
 
         layer_1 {
+            display-name = "Scroll";
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
@@ -80,6 +97,7 @@
         };
 
         layer_2 {
+            display-name = "Layer2";
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
@@ -91,6 +109,7 @@
         };
 
         layer_3 {
+            display-name = "Layer3";
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
 &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
