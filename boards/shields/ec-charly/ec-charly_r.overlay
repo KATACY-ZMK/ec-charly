@@ -59,26 +59,20 @@
         motion-gpios = <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         res-cpi = <800>;
         
+        /* 現在の正しい向きの設定 */
         zephyr,axis-x = <INPUT_REL_Y>;
         zephyr,axis-y = <INPUT_REL_X>;
+        
         invert-y;
+        
+        /* force-awake; */
     };
 };
 
-// --- ファイル末尾の / { ... } ブロックを以下に差し替え ---
 / {
-    /* 縦移動専用の倍率設定 */
-    zip_scaler_y: zip_scaler_y {
-        compatible = "zmk,input-processor-scaler";
-        #input-processor-cells = <2>;
-        type = <INPUT_EV_REL>;
-        codes = <INPUT_REL_Y>; 
-    };
-
-    /* リスナーのラベル定義のみ（中身は keymap で上書き） */
-    trackball_listener: trackball_listener {
-        compatible = "zmk,input-listener";
-        device = <&trackball>;
-        status = "okay";
-    };
+  trackball_listener {
+    status = "okay";
+    compatible = "zmk,input-listener";
+    device = <&trackball>;
+  };
 };
