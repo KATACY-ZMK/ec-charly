@@ -1,4 +1,4 @@
-if SHIELD_ECCHARLY_R
+if SHIELD_ECCHARLY_L
 
 config ZMK_KEYBOARD_NAME
     default "ec-charly"
