@@ -6,3 +6,5 @@ url: https://github.com/KATACY-ZMK/split75-test
 requires: [seeeduino_xiao_ble]
 features:
   - keys
+  - encoder
+  - pointer
