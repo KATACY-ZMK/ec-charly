@@ -15,10 +15,8 @@
         display-name = "Default Layout";
         transform = <&default_transform>;
         keys  //                     w   h    x    y     rot    rx    ry
-        //Row0
-            keys
-        // Row 0
-              <&key_physical_attrs 100 100    0    0       0     0     0>
+        
+            = <&key_physical_attrs 100 100    0    0       0     0     0>
 
             , <&key_physical_attrs 100 100  125    0       0     0     0>
             , <&key_physical_attrs 100 100  225    0       0     0     0>
