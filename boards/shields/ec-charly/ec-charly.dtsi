@@ -11,6 +11,12 @@
         zmk,physical-layout = &physical_layout0; // ← ZMK Studio用にここに追加しておくと確実です
     };
 
+    key_physical_attrs: key_physical_attrs {
+        compatible = "zmk,key-physical-attrs";
+        width = <100>;
+        height = <100>;
+    };
+
     // 1つ目の定義に kscan の情報を統合しました
     physical_layout0: physical_layout0 {
         compatible = "zmk,physical-layout";
