@@ -25,6 +25,14 @@
 &right2_encoder { status = "okay"; };
 
 
+&spi0 {
+    status = "okay";
+};
+
+&trackball {
+    status = "okay";
+};
+
 &trackball_listener {
     status = "okay";
     compatible = "zmk,input-listener";
