@@ -92,7 +92,7 @@
 &trans  &trans         &trans  &trans  &trans  &trans    &trans      &trans      &trans    &trans        &trans     &trans  &trans  &trans  &trans  &trans
 &trans  &trans         &trans  &trans  &trans  &trans    &trans      &trans      &trans    &kp UP_ARROW  &trans     &trans  &trans  &trans  &trans  &trans
 &trans  &kp LG(SPACE)  &trans  &trans  &trans  &mkp MB3  &trans      &trans      &kp LEFT  &kp DOWN      &kp RIGHT  &trans  &trans  &trans  &trans
-&trans  &trans         &trans  &trans  &trans  &trans    &kp LS(N9)  &kp LS(N0)  &trans    &trans        &trans     &trans  &trans  &trans
+&trans  &trans         &trans  &trans  &trans  &trans    &kp LS(N9)  &zero_left  &trans    &trans        &trans     &trans  &trans  &trans
 &trans  &trans         &trans  &trans  &trans  &trans    &trans      &kp DEL     &trans    &trans        &trans     &trans
             >;
 
