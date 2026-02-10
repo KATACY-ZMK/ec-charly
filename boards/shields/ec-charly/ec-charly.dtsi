@@ -11,7 +11,9 @@
         zmk,kscan = &kscan0;
         zmk,physical-layout = &physical_layout0; // ← ZMK Studio用にここに追加しておくと確実です
     };
+};
 
+/ {
     // 1つ目の定義に kscan の情報を統合しました
     physical_layout0: physical_layout0 {
         compatible = "zmk,physical-layout";
@@ -145,7 +147,9 @@
             , <&key_physical_attrs 100 100 1750  525       0      0      0>
             ;
     };
+};
 
+/ {
     default_transform: keymap_transform0 {
         compatible = "zmk,matrix-transform";
         columns = <7>;
@@ -159,13 +163,16 @@
         RC(0,6) RC(1,6) RC(2,6) RC(3,6) RC(4,6)         RC(5,6) RC(6,5)     RC(8,6) RC(9,6)                                     RC(10,6) RC(11,6) RC(12,6)
         >;
     };
+};
 
+/ {
     kscan0: kscan0 {
         compatible = "zmk,kscan-gpio-charlieplex";
         wakeup-source;
     };
+};
 
-
+/ {
     left1_encoder: encoder_left1 {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
@@ -195,10 +202,72 @@
         steps = <40>;
         status = "disabled";
     };
+};
 
+/ {
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
         sensors = <&left1_encoder &left2_encoder &right1_encoder &right2_encoder>;
         triggers-per-rotation = <20>;
     };
+};
+
+&pinctrl {
+    spi0_default: spi0_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 4)>,
+                    <NRF_PSEL(SPIM_MISO, 0, 4)>;
+        };
+    };
+    spi0_sleep: spi0_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 5)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 4)>,
+                    <NRF_PSEL(SPIM_MISO, 0, 4)>;
+            low-power-enable;
+        };
+    };
+};
+
+&spi0 {
+    status = "okay";
+    compatible = "nordic,nrf-spim";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio0 15 GPIO_ACTIVE_LOW>;
+
+    &spi0 {
+    status = "okay";
+    compatible = "nordic,nrf-spim";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio0 15 GPIO_ACTIVE_LOW>;
+    
+    trackball: trackball@0 {
+        status = "okay";
+        compatible = "pixart,pmw3610";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        motion-gpios = <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        res-cpi = <600>;
+        
+        /* 現在の正しい向きの設定 */
+        zephyr,axis-x = <INPUT_REL_Y>;
+        zephyr,axis-y = <INPUT_REL_X>;
+        
+        invert-y;
+        
+        force-awake;
+    };
+};
+
+/ {
+  trackball_listener: trackball_listener {
+    compatible = "zmk,input-listener";
+    status = "disabled";
+    device = <&trackball>;
+  };
 };

@@ -22,7 +22,6 @@ if SHIELD_ECCHARLY_R
 config ZMK_POINTING
     default y
 
-# Assuming pointing device uses SPI
 config SPI
     default y
 
