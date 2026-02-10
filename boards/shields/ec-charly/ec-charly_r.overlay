@@ -24,17 +24,18 @@
 &right1_encoder { status = "okay"; };
 &right2_encoder { status = "okay"; };
 
-
 &spi0 {
     status = "okay";
 };
 
 &trackball {
     status = "okay";
+    /* 右側だけで D1 (P0.03) ピンを割り当てる */
+    motion-gpios = <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 };
 
 &trackball_listener {
     status = "okay";
     compatible = "zmk,input-listener";
     device = <&trackball>;
-    };
+};
